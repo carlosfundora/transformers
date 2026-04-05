@@ -672,7 +672,13 @@ def is_pygments_available() -> bool:
 
 @lru_cache
 def is_torchvision_available() -> bool:
-    return _is_package_available("torchvision")[0]
+    is_available = _is_package_available("torchvision")[0]
+    if is_available:
+        try:
+            import torchvision
+        except Exception:
+            return False
+    return is_available
 
 
 @lru_cache
